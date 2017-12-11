@@ -1,0 +1,164 @@
+{% extends 'student/base.html' %}
+{% block title %}Details page{% endblock %}
+{% block body %}
+<div class="conatainer">
+		<h1 style="padding-top:-10px;margin-top:10px;text-align:center;font-family:Raleway;color:#55acee">Profile</h1>
+</div>
+<div class="row">
+<div class="col-lg-2 col-md-3 col-sm-12 col-xs-12" style="font-family: Raleway;margin-left: 11px;text-align:center;color:#4D7F89">
+{% if student.image %}
+<img src="{{ student.image.url }}" class="img-responsive">
+{% endif %}
+<h1>{{student.enrollment_no}}</h1>
+<h3>{{student.user}}</h3>
+
+{% if request.user.id == student.user.id %}
+<h3><a href="{% url 'student:studentsite' %}" style="font-family: Raleway">Add Site</a></h3>
+<h3><a href="{% url 'student:studentsiteupdate' %}" style="font-family: Raleway">Update Site</a></h3>
+<h3><a href="{% url 'student:userpasswordchange' %}" style="font-family: Raleway">Change Password</a></h3>
+{% else %}
+<br>
+{% endif %}
+</div>
+<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+<div class="container">
+	  <!-- Nav tabs -->
+	  <ul class="nav nav-tabs" role="tablist" >
+		<li role="presentation" class="active"><a href="#TOPS" aria-controls="TOPS" role="tab" data-toggle="tab" style="font-family:Raleway;font-size:21px;">Tops</a></li>
+		<li role="presentation"><a href="#GITHUB" aria-controls="GITHUB" role="tab" data-toggle="tab" style="font-family:Raleway;font-size:21px;">Github</a></li>
+		<li role="presentation"><a href="#SPOJ" aria-controls="SPOJ" role="tab" data-toggle="tab" style="font-family:Raleway;font-size:21px;">Spoj</a></li>
+		<li role="presentation"><a href="#CODECHEF" aria-controls="CODECHEF" role="tab" data-toggle="tab" style="font-family:Raleway;font-size:21px;">Codechef</a></li>
+		<li role="presentation"><a href="#CODEBUDDY" aria-controls="CODEBUDDY" role="tab" data-toggle="tab" style="font-family:Raleway;font-size:21px;">Codebuddy</a></li>
+    <li role="presentation"><a href="#CODEFORCES" aria-controls="CODEFORCES" role="tab" data-toggle="tab" style="font-family:Raleway;font-size:21px;">Codeforces</a></li>
+	  </ul>
+
+	  <br><br>
+	  <!-- Tab panes -->
+          <font size="5">
+	  <div class="tab-content">
+		<div role="tabpanel" class="tab-pane fade in active" id="TOPS">
+			<div class="content">
+				<div class="container">
+
+                                </div>
+                        </div>
+                </div>
+
+
+		<div role="tabpanel" class="tab-pane fade" id="GITHUB">
+			<div class="content">
+				<div class="thumbnail" style="width:50%;background-color:palegreen">
+				    {% for site in student.user.studentsite_set.all %}
+                                    {% if site.site.site_name == "github" %}
+                                          <label>Username</label>: {{site.username}}<br>
+			                  <label>Repositories</label>: {{site.site_repo}}<br>
+                                          <label>Stars</label>: {{site.site_star}}<br>
+                                          <label>Contributions</label>: {{site.site_contribution}}<br>
+                                          <label>Followers</label>: {{site.site_follower}}<br>
+                                          <label>Following</label>: {{site.site_following}}<br>
+		                        <br>
+                                    {% endif %}
+                                    {% endfor %}
+				</div>
+				<div class="row">
+                                    {% for site in student.user.githubrank_set.all %}
+                                    <div class="col-lg-4 col-md-4 col-sm-10 col-xs-10">
+                                          <div class="thumbnail" style="background-color:lightgray;padding-right:+10px;margin-right:+10px;"><center>
+                                                {% if site.city != None %}
+                                                <font color="white"><label><u>{{site.language}}</u></label></center><br></font>
+			                  	<label>{{site.city}} Rank</label>: {{site.city_rank}}/{{site.city_total}}<br>
+                                          	<label>{{site.country}} Rank</label>: {{site.country_rank}}/{{site.country_total}}<br>
+                                          	<label>World Rank</label>: {{site.world_rank}}/{{site.world_total}}<br>
+                                          	<label>Repositories</label>: {{site.repos}}<br>
+                                          	<label>Stars</label>: {{site.stars}}<br>
+                                                {% else %}
+                                                  <font color="white"><label><u>{{site.language}}</u></label></center><br></font>
+                                                  <label>World Rank</label>: {{site.world_rank}}/{{site.world_total}}<br>
+                                          	<label>Repositories</label>: {{site.repos}}<br>
+                                          	<label>Stars</label>: {{site.stars}}<br>
+                                                {% endif %}
+                                          </div>
+		                        <br>
+                                    </div>
+                                    {% endfor %}
+				    	{% if request.user.id == student.user.id %}
+
+					<h3><a href="{% url 'student:githubrank' %}">Add/Update Github Ranks based on languages</a></h3>
+
+					{% else %}
+					<br>
+					{% endif %}
+                                </div>
+                                </div>
+
+                </div>
+
+
+		<div role="tabpanel" class="tab-pane fade" id="SPOJ">
+			<div class="content">
+				<div class="thumbnail" style="width:50%;background-color:palegreen">
+                                    {% for site in student.user.studentsite_set.all %}
+                                    {% if site.site.site_name == "spoj" %}
+		                        <label>Username</label>: {{site.username}}<br>
+			                <label>World Rank</label>: {{site.site_rank}}<br>
+                                        <label>Points</label>: {{site.site_point}}<br>
+                                        <label>Question Solved</label>: {{site.site_ques_solved}}<br>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                        </div>
+                </div>
+
+
+		<div role="tabpanel" class="tab-pane fade" id="CODECHEF">
+			<div class="content">
+				<div class="thumbnail" style="width:50%;background-color:palegreen">
+                                    {% for site in student.user.studentsite_set.all %}
+                                    {% if site.site.site_name == "codechef" %}
+		                        <label>Username</label>: {{site.username}}<br>
+			                <label>World Rank</label>: {{site.site_rank}}<br>
+                                        <label>Rating</label>: {{site.site_rating}}<br>
+			                <!-- <label>Question Solved</label>: {{site.site_ques_solved}}<br> -->
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                        </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane fade" id="CODEBUDDY">
+			<div class="content">
+				<div class="thumbnail" style="width:50%;background-color:palegreen">
+                                    {% for site in student.user.studentsite_set.all %}
+                                    {% if site.site.site_name == "codebuddy" %}
+		                        <label>Username</label>: {{site.username}}<br>
+			                <label>World Rank</label>: {{site.site_rank}}<br>
+                                        <label>Points</label>: {{site.site_point}}<br>
+			                <label>Question Solved</label>: {{site.site_ques_solved}}<br>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                        </div>
+                </div>
+
+		<div role="tabpanel" class="tab-pane fade" id="CODEFORCES">
+			<div class="content">
+				<div class="thumbnail" style="width:50%;background-color:palegreen">
+                                    {% for site in student.user.studentsite_set.all %}
+                                    {% if site.site.site_name == "codeforces" %}
+		                        <label>Username</label>: {{site.username}}<br>
+                      <label>Rating</label>: {{site.site_rating}}<br>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                        </div>
+                </div>
+          </div>
+          </font>
+</div>
+</div>
+{% if message %}
+<script>
+    alert('{{ message }}');
+</script>
+{% endif %}
+{% endblock %}
